@@ -1,13 +1,12 @@
-'use client'
-import React from 'react'
-import { GlobalProvider } from '../context/globalProvider';
+"use client";
+import React from "react";
+import { GlobalProvider } from "../context/globalProvider";
 
-interface Props{
-    children: React.ReactNode;
+interface Props {
+  children: React.ReactNode;
 }
 
 function ContextProvider({ children }: Props) {
-
   const [isReady, setIsReady] = React.useState(false);
 
   React.useEffect(() => {
@@ -20,13 +19,7 @@ function ContextProvider({ children }: Props) {
     return null;
   }
 
-  return (
-    <div>
-        <GlobalProvider>
-            {children}
-        </GlobalProvider>
-    </div>
-  )
+  return <GlobalProvider>{children}</GlobalProvider>;
 }
 
 export default ContextProvider;
