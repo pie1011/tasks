@@ -2,6 +2,7 @@
 import React, { createContext, useState, useContext } from 'react';
 import themes from './themes';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export const GlobalContext = createContext();
 export const GlobalUpdateContext = createContext();
@@ -18,9 +19,11 @@ export const GlobalProvider = ({ children }) => {
         setIsLoading(true);
         try {
             const res = await axios.get("/api/tasks");
-            console.log(res.data);
+            setTasks(res.data);
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching tasks");
         }
     };
     React.useEffect(() => {
@@ -28,7 +31,7 @@ export const GlobalProvider = ({ children }) => {
     }, []);
 
     return (
-        <GlobalContext.Provider value={{theme}}>
+        <GlobalContext.Provider value={{theme, tasks}}>
             <GlobalUpdateContext.Provider value={{}}>
                 {children}
             </GlobalUpdateContext.Provider>
